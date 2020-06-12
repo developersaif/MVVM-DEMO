@@ -1,14 +1,16 @@
 package com.coppermobile.mysamplemvvmdatabindinglivedata.utils;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.coppermobile.mysamplemvvmdatabindinglivedata.data.source.local.AppDatabase;
 import com.coppermobile.mysamplemvvmdatabindinglivedata.data.source.local.LocalCommentsDataSource;
 import com.coppermobile.mysamplemvvmdatabindinglivedata.data.source.local.LocalDishDataSource;
 import com.coppermobile.mysamplemvvmdatabindinglivedata.data.source.remote.RemoteDishDataSource;
+import com.coppermobile.mysamplemvvmdatabindinglivedata.data.source.remote.RemoteMarvelDataSource;
 import com.coppermobile.mysamplemvvmdatabindinglivedata.repository.CommentsRepository;
 import com.coppermobile.mysamplemvvmdatabindinglivedata.repository.DishRepository;
+import com.coppermobile.mysamplemvvmdatabindinglivedata.repository.MarvelRepository;
 
 
 public class Injection {
@@ -24,4 +26,7 @@ public class Injection {
         return CommentsRepository.getInstance(LocalCommentsDataSource.getInstance(new AppExecutors(),
                 database.commentsDoaMethod()));
     }
+
+
+
 }

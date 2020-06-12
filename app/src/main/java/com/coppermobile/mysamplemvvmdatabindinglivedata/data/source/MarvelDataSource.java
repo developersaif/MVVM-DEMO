@@ -4,10 +4,11 @@ import androidx.lifecycle.LiveData;
 
 import com.coppermobile.mysamplemvvmdatabindinglivedata.data.Comments;
 import com.coppermobile.mysamplemvvmdatabindinglivedata.data.Dish;
+import com.coppermobile.mysamplemvvmdatabindinglivedata.data.Marvel;
 
 import java.util.List;
 
-public interface DataSource<T> {
+public interface MarvelDataSource<T> {
 
     void insertData(T data);
 
@@ -15,7 +16,5 @@ public interface DataSource<T> {
 
     void deleteData(T data);
 
-    LiveData<List<Comments>> getComments(int id);
-
-    LiveData<List<Dish>> getAllDishes();
+    LiveData<List<Marvel>> getAllMarvels();
 }

@@ -1,13 +1,15 @@
 package com.coppermobile.mysamplemvvmdatabindinglivedata.data.source.remote;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.support.annotation.NonNull;
+import android.util.Log;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.annotation.NonNull;
 
 import com.coppermobile.mysamplemvvmdatabindinglivedata.data.Comments;
 import com.coppermobile.mysamplemvvmdatabindinglivedata.data.Dish;
 import com.coppermobile.mysamplemvvmdatabindinglivedata.data.source.DataSource;
-import com.coppermobile.mysamplemvvmdatabindinglivedata.repository.DishAPIInterface;
+import com.coppermobile.mysamplemvvmdatabindinglivedata.repository.APIInterface;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -23,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RemoteDishDataSource implements DataSource<Dish> {
 
     private static final String URL = "https://api.androidhive.info/";
-    private static DishAPIInterface dishAPIInterface;
+    private static APIInterface dishAPIInterface;
     private static RemoteDishDataSource INSTANCE;
 
     private RemoteDishDataSource() {
@@ -32,7 +34,7 @@ public class RemoteDishDataSource implements DataSource<Dish> {
     public synchronized static RemoteDishDataSource getInstance() {
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder().baseUrl(URL).addConverterFactory(GsonConverterFactory.create(gson)).build();
-        dishAPIInterface = retrofit.create(DishAPIInterface.class);
+        dishAPIInterface = retrofit.create(APIInterface.class);
 
         if (INSTANCE == null) {
             INSTANCE = new RemoteDishDataSource();
@@ -67,6 +69,7 @@ public class RemoteDishDataSource implements DataSource<Dish> {
             @Override
             public void onResponse(@NonNull Call<List<DishResponse>> call, @NonNull Response<List<DishResponse>> response) {
                 if (response.body() != null) {
+                    Log.e("onResponse", "onResponse: "+response.body() );
                     List<DishResponse> dishResponseList = response.body();
                     if (dishResponseList != null) {
                         List<Dish> dishList = new ArrayList<>();

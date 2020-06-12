@@ -1,12 +1,14 @@
 package com.coppermobile.mysamplemvvmdatabindinglivedata.activities;
 
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
+import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.coppermobile.mysamplemvvmdatabindinglivedata.R;
 import com.coppermobile.mysamplemvvmdatabindinglivedata.ViewModelFactory;
@@ -16,10 +18,23 @@ import com.coppermobile.mysamplemvvmdatabindinglivedata.databinding.ActivityMain
 import com.coppermobile.mysamplemvvmdatabindinglivedata.utils.IClickListener;
 import com.coppermobile.mysamplemvvmdatabindinglivedata.viewmodels.DishViewModel;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements IClickListener {
 
     private ActivityMainBinding binding;
     private DishAdapter dishAdapter;
+    DishViewModel dishViewModel;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        setUpRecyclerView();
+        dishViewModel = obtainViewModel(this);
+        observeViewModel(dishViewModel);
+    }
 
     private void setUpRecyclerView() {
         dishAdapter = new DishAdapter(this);
@@ -28,20 +43,13 @@ public class MainActivity extends AppCompatActivity implements IClickListener {
         rvDish.setAdapter(dishAdapter);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-
-        setUpRecyclerView();
-        DishViewModel dishViewModel = obtainViewModel(this);
-        observeViewModel(dishViewModel);
-    }
-
     private void observeViewModel(DishViewModel dishViewModel) {
-        dishViewModel.getAllDish().observe(this, dishList -> {
-            if (dishList != null) dishAdapter.addData(dishList);
+        dishViewModel.getAllDish().observe(this, new Observer<List<Dish>>() {
+            @Override
+            public void onChanged(@Nullable List<Dish> dishList) {
+                if (dishList != null)
+                    dishAdapter.addData(dishList);
+            }
         });
     }
 

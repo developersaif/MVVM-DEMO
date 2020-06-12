@@ -1,7 +1,7 @@
 package com.coppermobile.mysamplemvvmdatabindinglivedata.data.source.local;
 
-import android.arch.lifecycle.LiveData;
-import android.support.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.annotation.NonNull;
 
 
 import com.coppermobile.mysamplemvvmdatabindinglivedata.data.Comments;

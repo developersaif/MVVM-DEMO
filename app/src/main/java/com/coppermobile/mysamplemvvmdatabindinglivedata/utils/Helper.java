@@ -1,6 +1,6 @@
 package com.coppermobile.mysamplemvvmdatabindinglivedata.utils;
 
-import android.databinding.BindingAdapter;
+import androidx.databinding.BindingAdapter;
 import android.text.format.DateFormat;
 import android.widget.ImageView;
 

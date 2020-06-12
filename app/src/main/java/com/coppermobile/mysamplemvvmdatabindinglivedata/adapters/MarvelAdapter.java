@@ -1,31 +1,35 @@
 package com.coppermobile.mysamplemvvmdatabindinglivedata.adapters;
 
 import android.content.Context;
-import androidx.databinding.DataBindingUtil;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.coppermobile.mysamplemvvmdatabindinglivedata.R;
 import com.coppermobile.mysamplemvvmdatabindinglivedata.activities.MainActivity;
+import com.coppermobile.mysamplemvvmdatabindinglivedata.activities.MarvelActivity;
 import com.coppermobile.mysamplemvvmdatabindinglivedata.data.Dish;
+import com.coppermobile.mysamplemvvmdatabindinglivedata.data.Marvel;
 import com.coppermobile.mysamplemvvmdatabindinglivedata.databinding.ListDishBinding;
+import com.coppermobile.mysamplemvvmdatabindinglivedata.databinding.ListMarvelBinding;
 
 import java.util.List;
 
-public class DishAdapter extends RecyclerView.Adapter<DishAdapter.MyViewHolder> {
+public class MarvelAdapter extends RecyclerView.Adapter<MarvelAdapter.MyViewHolder> {
 
     private LayoutInflater layoutInflater;
-    private List<Dish> dishList;
+    private List<Marvel> marvelList;
     private Context context;
 
-    public DishAdapter(Context context) {
+    public MarvelAdapter(Context context) {
         this.context = context;
     }
 
-    public void addData(List<Dish> dishList) {
-        this.dishList = dishList;
+    public void addData(List<Marvel> marvelList) {
+        this.marvelList = marvelList;
         notifyDataSetChanged();
     }
 
@@ -34,29 +38,29 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.MyViewHolder> 
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         if (layoutInflater == null)
             layoutInflater = LayoutInflater.from(viewGroup.getContext());
-        ListDishBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.list_dish, viewGroup, false);
+        ListMarvelBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.list_marvel, viewGroup, false);
         return new MyViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-        Dish dish = dishList.get(i);
+        Marvel dish = marvelList.get(i);
         if (dish != null) {
             myViewHolder.binding.setDish(dish);
-            myViewHolder.binding.setMain((MainActivity) context);
+            myViewHolder.binding.setMain((MarvelActivity) context);
         }
     }
 
     @Override
     public int getItemCount() {
-        return dishList != null && !dishList.isEmpty() ? dishList.size() : 0;
+        return marvelList != null && !marvelList.isEmpty() ? marvelList.size() : 0;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private ListDishBinding binding;
+        private ListMarvelBinding binding;
 
-        MyViewHolder(ListDishBinding itemBinding) {
+        MyViewHolder(ListMarvelBinding itemBinding) {
             super(itemBinding.getRoot());
             this.binding = itemBinding;
         }

@@ -1,10 +1,10 @@
 package com.coppermobile.mysamplemvvmdatabindinglivedata.repository;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MediatorLiveData;
-import android.arch.lifecycle.Observer;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.Observer;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.coppermobile.mysamplemvvmdatabindinglivedata.data.Comments;
 import com.coppermobile.mysamplemvvmdatabindinglivedata.data.Dish;
@@ -62,6 +62,7 @@ public class DishRepository implements DataSource<Dish> {
                 mediatorLiveData.removeSource(allDishesFromDao);
                 if (allDishesFromDao.getValue() != null) {
                     if (DishRepository.this.shouldFetch(allDishesFromDao.getValue())) {
+
                         DishRepository.this.fetchFromNetwork(allDishesFromDao);
                     } else {
                         mediatorLiveData.addSource(allDishesFromDao, dishList1 -> mediatorLiveData.setValue(dishList1));
@@ -76,8 +77,11 @@ public class DishRepository implements DataSource<Dish> {
     private void fetchFromNetwork(LiveData<List<Dish>> data) {
         LiveData<List<Dish>> allDishes = mRemoteDataSource.getAllDishes();
 
-        mediatorLiveData.addSource(data, dishList -> {
-            //add loader
+        mediatorLiveData.addSource(data, new Observer<List<Dish>>() {
+            @Override
+            public void onChanged(@Nullable List<Dish> dishList) {
+                //add loader
+            }
         });
 
         mediatorLiveData.addSource(allDishes, dishList -> {
@@ -96,3 +100,5 @@ public class DishRepository implements DataSource<Dish> {
         return dishList == null || dishList.isEmpty();
     }
 }
+
+

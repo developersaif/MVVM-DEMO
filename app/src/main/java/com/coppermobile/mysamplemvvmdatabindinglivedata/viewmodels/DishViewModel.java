@@ -1,8 +1,8 @@
 package com.coppermobile.mysamplemvvmdatabindinglivedata.viewmodels;
 
 import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LiveData;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
 import com.coppermobile.mysamplemvvmdatabindinglivedata.data.Dish;
 import com.coppermobile.mysamplemvvmdatabindinglivedata.repository.DishRepository;
@@ -19,6 +19,6 @@ public class DishViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Dish>> getAllDish() {
-        return mTasksRepository.getAllDishes();
+            return mTasksRepository.getAllDishes();
     }
 }
